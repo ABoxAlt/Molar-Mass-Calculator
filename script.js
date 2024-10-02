@@ -58,5 +58,5 @@ function calculateMolarMass() {
 }
 
 function getElementMolarMass(element) {
-
+  return molarMasses[periodicTable.indexOf(element)];
 }
