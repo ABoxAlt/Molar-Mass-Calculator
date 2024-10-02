@@ -37,7 +37,7 @@ function type(e) {
 }
 
 function calculateMolarMass() {
-  const multiplier = userText.textContent.shift();
+  const multiplier = parseInt(userText.textContent.shift());
   const elements = [];
   for (const element of userText.textContent.split(/([A-Z][a-z]*[0-9]*)/g)) {
     if (element != "" && element != " ") {
@@ -45,13 +45,16 @@ function calculateMolarMass() {
     }
   }
   
-  let molarMass = 0;
   for (const element of elements) {
-    molarMass += getElementMolarMass(element.substring(0,2)) * element.substring(2);
+    let [, symbol, count] = /([A-Z][a-z]*)([0-9]*)/.exec(element);
+    if (count == "") {
+      count = 1;
+    }
+    count = parseInt(count);
+    molarmass += getElementMolarMass(symbol) * count;
   }
-  
-  userText.textContent = multiplier + userText.textContent
-  return molarMass.toString();
+  userText.textContent = multiplier.toString() + userText.textContent
+  return (molarMass * multiplier).toString();
 }
 
 function getElementMolarMass(element) {
