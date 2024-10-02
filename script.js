@@ -37,6 +37,7 @@ function type(e) {
 }
 
 function calculateMolarMass() {
+  const multiplier = userText.textContent.shift();
   const elements = [];
   for (const element of userText.textContent.split(/([A-Z][a-z]*[0-9]*)/g)) {
     if (element != "" && element != " ") {
@@ -48,6 +49,8 @@ function calculateMolarMass() {
   for (const element of elements) {
     molarMass += getElementMolarMass(element.substring(0,2)) * element.substring(2);
   }
+  
+  userText.textContent = multiplier + userText.textContent
   return molarMass.toString();
 }
 
