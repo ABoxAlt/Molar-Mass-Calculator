@@ -1,0 +1,25 @@
+body {
+  background-color: black;
+}
+
+#title, #pageDescription, #userText, #molarMassText {
+  text-align: center;
+  color: white;
+  font-family: monospace;
+  font-size: 20px;
+  margin-left: 20%;
+  margin-right: 20%;
+}
+#userArea {
+  text-align: center;
+}
+#userText {
+  position: relative;
+  top: 50px;
+}
+
+#lowRow {
+  margin-top: 50px;
+  color: white;
+  width: 450px;
+}
