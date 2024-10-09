@@ -1,6 +1,9 @@
 const userText = document.querySelector("#userText");
 const molarMassText = document.querySelector("#molarMassText");
 const registeredCharecters = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890()";
+fetch('molarMass.txt').then((f) => {
+  console.log(f);
+});
 //const molarMasses;
 //molarMasses[0].split(" ");
 //molarMasses[1].split(" ");
