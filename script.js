@@ -1,20 +1,17 @@
 const userText = document.querySelector("#userText");
 const molarMassText = document.querySelector("#molarMassText");
 const registeredCharecters = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890()";
-fetch('molarMass.txt').then((f) => {
-  console.log(f);
+const molarMasses = fetch('molarMass.txt').then((f) => f.text()).then((b) => {
+  b = b.split(/\n/);
+  console.log([b[0].split(' '), b[1].split(' ')]);
 });
-//const molarMasses;
-//molarMasses[0].split(" ");
-//molarMasses[1].split(" ");
-//console.log(molarMasses[0]);
-//console.log(molarMasses[1]);
+
 
 let typed = false;
 
 window.addEventListener("keyup", type);
 
-function type(e) {
+async function type(e) {
   if (e.keyCode == 8) {
     typed = true;
     userText.textContent = userText.textContent.slice(0, userText.textContent.lastIndexOf());
@@ -23,7 +20,7 @@ function type(e) {
     }
     return;
   } else if (e.keyCode == 13) {
-    molarMassText.textContent = "Molar Mass = " + calculateMolarMass();
+    molarMassText.textContent = "Molar Mass = " + await calculateMolarMass();
   }else {
     for (const char of registeredCharecters) {
       if (char == e.key) {
@@ -39,7 +36,8 @@ function type(e) {
   }
 }
 
-function calculateMolarMass() {
+async function calculateMolarMass() {
+  const masses = await molarMasses;
   const multiplier = parseInt(userText.textContent.shift());
   const elements = [];
   for (const element of userText.textContent.split(/([A-Z][a-z]*[0-9]*)/g)) {
