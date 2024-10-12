@@ -3,7 +3,7 @@ const molarMassText = document.querySelector("#molarMassText");
 const registeredCharecters = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890()";
 const molarMasses = fetch('molarMass.txt').then((f) => f.text()).then((b) => {
   b = b.split(/\n/);
-  console.log([b[0].split(' '), b[1].split(' ')]);
+  return [b[0].split(' '), b[1].split(' ')];
 });
 
 
@@ -38,26 +38,38 @@ async function type(e) {
 
 async function calculateMolarMass() {
   const masses = await molarMasses;
-  const multiplier = parseInt(userText.textContent.shift());
+
+  let userInput = userText.textContent;
+  let multiplier = 1;
+
+  if (!isNaN(userInput[0])) {
+    multiplier = parseInt(userInput.slice(0, 1));
+    userInput = userInput.slice(1);
+  }
+  
   const elements = [];
-  for (const element of userText.textContent.split(/([A-Z][a-z]*[0-9]*)/g)) {
+  for (const element of userInput.split(/([A-Z][a-z]*[0-9]*)/g)) {
     if (element != "" && element != " ") {
       elements.push(element);
     }
   }
-  
+
+  let molarMass = 0;
+
   for (const element of elements) {
     let [, symbol, count] = /([A-Z][a-z]*)([0-9]*)/.exec(element);
+    console.log(symbol, count);
     if (count == "") {
       count = 1;
+    } else {
+      count = parseInt(count);
     }
-    count = parseInt(count);
-    molarmass += getElementMolarMass(symbol) * count;
+
+    molarMass += getElementMolarMass(symbol, masses) * count;
   }
-  userText.textContent = multiplier.toString() + userText.textContent
-  return (molarMass * multiplier).toString();
+  return (molarMass * multiplier).toFixed(2).toString();
 }
 
-function getElementMolarMass(element) {
-  return molarMasses[periodicTable.indexOf(element)];
+function getElementMolarMass(element, masses) {
+  return masses[1][masses[0].indexOf(element)];
 }
