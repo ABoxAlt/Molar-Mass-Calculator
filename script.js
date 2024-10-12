@@ -43,8 +43,7 @@ async function calculateMolarMass() {
   let multiplier = 1;
 
   if (!isNaN(userInput[0])) {
-    multiplier = parseInt(userInput.slice(0, 1));
-    userInput = userInput.slice(1);
+    [, multiplier, userInput] = /(\d*)(.*)/.exec(userInput);
   }
   
   const elements = [];
@@ -58,7 +57,6 @@ async function calculateMolarMass() {
 
   for (const element of elements) {
     let [, symbol, count] = /([A-Z][a-z]*)([0-9]*)/.exec(element);
-    console.log(symbol, count);
     if (count == "") {
       count = 1;
     } else {
